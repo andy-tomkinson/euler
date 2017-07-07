@@ -15,9 +15,9 @@ end
 
 def circular?(prime)
   prime = prime.to_s
-  return false if ['0','2','4','5','6','8'].any? { |char| prime.include?(char)}
+  return false if %w[0 2 4 5 6 8].any? { |char| prime.include?(char) }
   prime.length.times do
-    return false unless (prime.to_i).prime?
+    return false unless prime.to_i.prime?
     prime = cycle(prime)
   end
   true

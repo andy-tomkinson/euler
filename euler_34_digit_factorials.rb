@@ -16,6 +16,8 @@ maximum possible is 2540160
 
 =end
 
+##
+# extends Integer to include factorials
 class Integer
   def fact
     (1..self).reduce(:*) || 1
@@ -23,11 +25,11 @@ class Integer
 end
 
 def digit_factorial_sum(number)
-  number == number.digits.collect { |i| i.fact }.reduce(:+)
+  number == number.digits.collect(&:fact).reduce(:+)
 end
 
 def sum_for_range(maximum, minimum = 10)
   (minimum..maximum).each.select { |i| digit_factorial_sum(i) }.reduce(:+)
 end
 
-puts sum_for_range(2540160)
+puts sum_for_range(2_540_160)

@@ -35,21 +35,21 @@ if two then try for both numbers
 
 =end
 
-def find_shared_digits(numerator,denominator)
+def find_shared_digits(numerator, denominator)
   numerator.digits & denominator.digits
 end
 
-def compare_to_stripped_fraction(numerator,denominator,shared)
+def compare_to_stripped_fraction(numerator, denominator, shared)
   numerator.to_f / denominator == numerator.digits.reject { |i| i == shared }[0].to_f / denominator.digits.reject { |i| i == shared }[0]
 end
 
 def cycle_denominators
-  [*11..19,*21..29,*31..39,*41..49,*51..59,*61..69,*71..79,*81..89,*91..99].each do |denominator|
-    [*11..19,*21..29,*31..39,*41..49,*51..59,*61..69,*71..79,*81..89,*91..99].each do |numerator|
+  [*11..19, *21..29, *31..39, *41..49, *51..59, *61..69, *71..79, *81..89, *91..99].each do |denominator|
+    [*11..19, *21..29, *31..39, *41..49, *51..59, *61..69, *71..79, *81..89, *91..99].each do |numerator|
       break if numerator >= denominator
-      find_shared_digits(numerator,denominator).each do |shared|
-        break if denominator.digits.reject { |i| i == shared }[0] == nil
-        puts "#{numerator} / #{denominator} equals #{numerator.digits.reject { |i| i == shared }[0]} / #{denominator.digits.reject { |i| i == shared }[0]}" if compare_to_stripped_fraction(numerator,denominator,shared)
+      find_shared_digits(numerator, denominator).each do |shared|
+        break if denominator.digits.reject { |i| i == shared }[0].nil?
+        puts "#{numerator} / #{denominator} equals #{numerator.digits.reject { |i| i == shared }[0]} / #{denominator.digits.reject { |i| i == shared }[0]}" if compare_to_stripped_fraction(numerator, denominator, shared)
       end
     end
   end
