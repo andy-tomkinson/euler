@@ -10,45 +10,31 @@ How many different ways can £2 be made using any number of coins?
   
 =end
 
-=begin
-  
-1p : [1]              1
-2p : [2][1,1]         2
-5p : [5],[2,2,1]      2
-10p: [10],[5,5]       2
-20p: [20],[10,10]     2
-50p: [50],[20,20,10]  2
-£1 : [100],[50,50]    2
-£2 : [200],[100,100]  2
-  
-=end
+@coins = [200, 100, 50, 20, 10, 5, 2, 1]
 
-1
+def coin_permutations_to_make(target, coins = @coins)
+    permutations = 0
+    coins.select { |x| x <= target }.each do |current_largest|
+        p "for #{current_largest}p"
+        if current_largest == 1
+            p "I will use #{target} pennies to fill it up"
+            p '---'
+            permutations += 1
+        else
+            (target / current_largest).downto(1) do |num_of_largest|
+                value = current_largest * num_of_largest
+                if value == target
+                    p "#{num_of_largest} x #{current_largest} is #{value} so I'm happy"
+                    p '---'
+                    permutations += 1
+                elsif value.between?(1, target)
+                    p "#{num_of_largest} x #{current_largest} is #{value}, aiming for #{target}"
+                    permutations += coin_permutations_to_make(target - value, coins.select { |x| x < current_largest })
+                end
+            end
+        end
+    end
+    permutations
+end
 
-2
-1 1
-
-5
-2 2 1
-2 1 1 1
-1 1 1 1 1
-
-10
-5 5
-5 2 2 1
-5 2 1 1 1   
-5 1 1 1 1 1
-2 2 2 2 2             # not from 5 5
-2 2 2 2 1 1
-2 2 2 1 1 1 1
-2 2 1 1 1 1 1 1
-2 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1
-
-1 + 1
-1 + 2 + 1
-1 + 4 + 3 + 2 + 1 + 1 - 1 # overlap
-
-1 + 11 + 10 + 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1
-1 + 11 + 11 + 11 + 11 + 11 + 11
-1 + 66 - overlap
+p coin_permutations_to_make(200)

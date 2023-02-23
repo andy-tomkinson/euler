@@ -20,6 +20,7 @@ Find the value of d < 1000 for which 1/d contains the longest recurring cycle in
 
 require 'bigdecimal'
 
+
 def pattern?(string,length)
   string.first(length) == string.drop(length).first(length)
 end
@@ -57,21 +58,27 @@ end
 #puts (n)
 
 def lets_do_this
-  x = BigDecimal.new('1.0')
+  x = BigDecimal('1.0')
   max = 0
   answer = 0
   (1..1000).each do |i|
-    n = x.div(i,1000)
-    if pattern_length(n) > max
-      max = pattern_length(n)
-      answer = i
+    unless i.even?
+      unless i % 5 == 0
+        @i = BigDecimal(i)
+        n = BigDecimal(x.div(@i,4000))
+        length_check = pattern_length(n)
+        if length_check > max
+          max = length_check
+          answer = i
+          puts max
+        end
+      end
     end
-    puts max
   end
-  answer
+  p "Answer is #{answer}"
 end
 
-#puts lets_do_this
+lets_do_this
 #m = (1.0 / 73).to_s.each_char.map.drop(2)
 #print m
 #puts back_pattern?(m,8)
@@ -86,4 +93,5 @@ puts n.div(i,200)
 
 puts pattern_length(n.div(i,))
 =end
-puts (9 ** 21).to_s.length
+# puts (9 ** 21).to_s.length
+# puts BigDecimal(1.0,5).div(BigDecimal(982),10000)
